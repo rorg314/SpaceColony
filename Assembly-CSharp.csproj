@@ -57,6 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Colony.cs" />
+    <Compile Include="Assets\Scripts\Entity.cs" />
+    <Compile Include="Assets\Scripts\EntitySpriteController.cs" />
+    <Compile Include="Assets\Scripts\UiController.cs" />
+    <Compile Include="Assets\Scripts\Colonist.cs" />
+    <Compile Include="Assets\Scripts\World.cs" />
+    <Compile Include="Assets\Scripts\Building.cs" />
+    <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\ProducerSO.cs" />
+    <Compile Include="Assets\Scripts\ConsumerSO.cs" />
+    <Compile Include="Assets\Scripts\MasterController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
