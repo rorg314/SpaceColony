@@ -7,24 +7,21 @@ public class Building {
     // Colony this building is in 
     public Colony colony { get; protected set; }
 
-    
+
+
     ///////// Consumption/production info /////////
 
-    // Consumer component attached to this building
-    public ConsumerSO consumer { get; protected set; }
+    // Recipe to build this building
+    public RecipeSO buildRecipe;
 
-    // Producer component attached to this building
-    public ProducerSO producer { get; protected set; }
-
+    // Recipe object produced by this building
+    public RecipeSO recipe;
     // Power consumption of this building
     public int wattage;
 
     // Base consumption speed (modified by upgrades)
-    public int consumptionSpeed = 1;
-
-    // Base production speed (modified by upgrades)
-    public int productionSpeed = 1;
-
+    public int speedModifier = 1;
+        
     ///////// Upgrade info /////////
 
 
