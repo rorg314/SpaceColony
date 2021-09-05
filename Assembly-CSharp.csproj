@@ -56,16 +56,17 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Colony.cs" />
-    <Compile Include="Assets\Scripts\UiController.cs" />
-    <Compile Include="Assets\Scripts\Colonist.cs" />
-    <Compile Include="Assets\Scripts\World.cs" />
-    <Compile Include="Assets\Scripts\Building.cs" />
-    <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\Universe.cs" />
     <Compile Include="Assets\Scripts\MasterController.cs" />
-    <Compile Include="Assets\Scripts\RecipeSO.cs" />
-    <Compile Include="Assets\Scripts\Upgrade.cs" />
+    <Compile Include="Assets\Scripts\World.cs" />
     <Compile Include="Assets\Scripts\ItemController.cs" />
+    <Compile Include="Assets\Scripts\Building.cs" />
+    <Compile Include="Assets\Scripts\Colonist.cs" />
+    <Compile Include="Assets\Scripts\Colony.cs" />
+    <Compile Include="Assets\Scripts\RecipeSO.cs" />
+    <Compile Include="Assets\Scripts\UiController.cs" />
+    <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\Upgrade.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

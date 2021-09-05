@@ -11,7 +11,7 @@ public enum ItemType {
     
     // Foods
     BasicFood, GourmetFood, Algae, FruitVeg, Meat, SynthMeat,
-    
+     
     // Basic resources 
     Ice, Rock, Coal, CrudeOil, MetalOre, 
     
