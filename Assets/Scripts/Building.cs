@@ -16,7 +16,8 @@ public class Building {
 
     // Recipe object produced by this building
     public RecipeSO recipe;
-    // Power consumption of this building
+    
+    // Power consumption/production of this building
     public int wattage;
 
     // Base consumption speed (modified by upgrades)

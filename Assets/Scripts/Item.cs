@@ -38,9 +38,7 @@ public class Item {
     // The type of item
     public ItemType itemType {get; protected set;}
 
-    // The total number of items in the colony
-    public int globalCount;
-
+    
     // Is this item currently researched (unlocked)?
     public bool researched;
 
@@ -52,7 +50,6 @@ public class Item {
     public Item(ItemType type) {
 
         this.itemType = type;
-        this.globalCount = 0;
         this.researched = false;
 
         ItemController.instance.itemTypeItemDict.Add(type, this);

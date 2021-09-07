@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\UiController.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Upgrade.cs" />
+    <Compile Include="Assets\Scripts\Planet.cs" />
+    <Compile Include="Assets\Scripts\UniverseController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

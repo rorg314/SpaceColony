@@ -12,6 +12,8 @@ public class ItemController : MonoBehaviour {
 
     public Dictionary<ItemType, Item> itemTypeItemDict;
 
+    
+
 
     public void Start() {
         
