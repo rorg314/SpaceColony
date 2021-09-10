@@ -13,16 +13,17 @@ public class Universe {
     // List of all planets in the universe
     public List<Planet> planets;
 
-    // Dict of planet -> colony
-    public Dictionary<Planet, Colony> planetColonyDict;
-    // Dict of colony -> planet
-    public Dictionary<Colony, Planet> colonyPlanetDict;
+    public Colony activeColony;
 
     public Universe() {
 
         this.colonies = new List<Colony>();
         this.planets = new List<Planet>();
 
+        // Create a planet and colony for testing
+        Planet testPlanet = new Planet(this);
+        Colony testColony = new Colony(testPlanet);
+        activeColony = testColony;
     }
 
 

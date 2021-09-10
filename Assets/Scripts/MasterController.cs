@@ -8,12 +8,14 @@ public enum GameSpeed {x1, x2, x4, x8 }
 
 public class MasterController : MonoBehaviour {
 
+    public static MasterController instance;
+
     // Current game speed
-    public GameSpeed gameSpeed;
+    public GameSpeed gameSpeed { get; protected set; }
     // Current FPT
-    public int framesPerTick;
+    public int framesPerTick { get; protected set; }
     // Frame counter for updates
-    public int frameCounter;
+    public int frameCounter { get; protected set; }
 
     // On Tick action
     public event Action onTick;
@@ -35,10 +37,18 @@ public class MasterController : MonoBehaviour {
     }
 
     public void Awake() {
+
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Debug.LogError("Trying to create more than one master controller!");
+        }
+        
         gameSpeed = GameSpeed.x1;
         framesPerTick = FramesPerTick(gameSpeed);
         frameCounter = 0;
-        onTick += debugTick;
+        //onTick += debugTick;
 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
@@ -56,7 +66,7 @@ public class MasterController : MonoBehaviour {
 
     }
 
-    // Actual ingame logic tick - called 
+    // Actual ingame logic tick invocation
     public void Tick() {
 
         onTick?.Invoke();
@@ -84,9 +94,9 @@ public class MasterController : MonoBehaviour {
     }
 
 
-    public void debugTick() {
+    //public void debugTick() {
 
-        Debug.Log("Tick -- Game Speed = " + gameSpeed);
+    //    Debug.Log("Tick -- Game Speed = " + gameSpeed);
 
-    }
+    //}
 }

@@ -16,11 +16,14 @@ public class ItemController : MonoBehaviour {
 
 
     public void Start() {
-        
-        if(instance != null) {
+
+        if (instance == null) {
             instance = this;
         }
-        
+        else {
+            Debug.LogError("Trying to create more than one item controller!");
+        }
+
         // Initialise all item objects
         InitialiseAllItems();
     }

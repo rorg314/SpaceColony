@@ -10,8 +10,18 @@ public class Planet {
     // Background sprite for this planet
     public Sprite planetBackground;
 
+    // The universe this planet is in
+    public Universe universe;
+
     // The colony on this planet
-    public Colony planetColony;
+    public Colony colony;
+
+    public Planet(Universe universe) {
+
+        this.universe = universe;
+        universe.planets.Add(this);
+
+    }
 
 
 }

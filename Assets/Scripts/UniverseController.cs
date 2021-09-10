@@ -9,9 +9,11 @@ public class UniverseController : MonoBehaviour {
 
     public Universe universe;
 
-    public void Awake() {
+    
+
+    public void Start() {
         
-        if (!instance) {
+        if (instance == null) {
             instance = this;
         }
 
@@ -22,8 +24,20 @@ public class UniverseController : MonoBehaviour {
             Debug.LogError("Cannot create more than one universe!");
         }
 
+        MasterController.instance.onTick += UpdateAllPlanets;
+
     }
 
+    public void UpdateAllPlanets() {
+
+        foreach(Planet p in universe.planets) {
+
+            //Update planet colony
+            ColonyController.instance.UpdateColony(p.colony);
+
+        }
+
+    }
 
 
 }
