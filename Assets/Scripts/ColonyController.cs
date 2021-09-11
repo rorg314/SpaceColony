@@ -45,5 +45,11 @@ public class ColonyController : MonoBehaviour {
         power.powerPanelString = "+ " + power.posWatts.ToString() + "W - " + power.negWatts.ToString() + "W = " + power.netWatts.ToString() + "W";
     }
 
+    public void UpdateInventory(Colony colony) {
 
+
+
+
+
+    }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8075c13216c0e5a41af59e3399fa0598, type: 3}
   m_Name: TestRecipe
   m_EditorClassIdentifier: 
-  consumedItems: 
+  consumedItems: 00000000
   allProducedItems: 
   producedItem: 0
   byproducts: 

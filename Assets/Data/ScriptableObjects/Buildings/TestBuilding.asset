@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingType: 0
   wattage: 0
-  recipe: {fileID: 0}
+  workload: 0
+  buildRecipe: {fileID: 0}
+  recipe: {fileID: 11400000, guid: 0e2e786300cfb1c49ba02ab4c82698e6, type: 2}

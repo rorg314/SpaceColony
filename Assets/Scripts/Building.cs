@@ -12,14 +12,19 @@ public class Building {
     ///////// Consumption/production info /////////
 
     public BuildingSO buildingSO;
-            
+
+    // Dict of item -> items per second (consumed(-)/produced(+)
+    public Dictionary<ItemType, float> itemsPerSecondDict;
+    // Dict of item -> items per second (consumed(-)/produced(+)
+    public Dictionary<ItemType, float> itemsPerTickDict;
+
     // Power consumption(-)/production(+) of this building
     public int wattage;
 
 
 
-    // Base consumption speed (modified by upgrades)
-    public int speedModifier = 1;
+    // Base consumption speed (modified by upgrades) - modifies crafting speed (total time = recipeTime/craftingSpeed)
+    public int craftingSpeed = 1;
         
     
     
@@ -58,6 +63,8 @@ public class Building {
         this.wattage = buildingSO.wattage;
         this.workload = buildingSO.workload;
 
+        
+
     }
 
     // Instance copy constructor 
@@ -72,4 +79,6 @@ public class Building {
 
     }
 
+
+    
 }

@@ -17,6 +17,11 @@ public class MasterController : MonoBehaviour {
     // Frame counter for updates
     public int frameCounter { get; protected set; }
 
+    // Target FPS
+    public int framerate = 60;
+
+    
+
     // On Tick action
     public event Action onTick;
 

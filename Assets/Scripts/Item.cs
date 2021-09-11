@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ItemType { 
+    // Test item
+    TestItem,
+    
     // Research items
     BasicResearch, AdvResearch, QuantumResearch,
     
@@ -54,6 +57,7 @@ public class Item {
 
         ItemController.instance.itemTypeItemDict.Add(type, this);
 
+        this.itemSprite = Resources.Load<Sprite>("Sprites/Items/" + itemType.ToString());
     }
 
     

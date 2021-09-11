@@ -13,6 +13,7 @@ public class ItemController : MonoBehaviour {
     public Dictionary<ItemType, Item> itemTypeItemDict;
 
     
+    
 
 
     public void Start() {
@@ -33,6 +34,14 @@ public class ItemController : MonoBehaviour {
 
         itemTypeItemDict = new Dictionary<ItemType, Item>();
         
+        foreach(ItemType type in Enum.GetValues(typeof(ItemType))) {
+
+            // Create the item instance
+            Item item = new Item(type);
+            // Store in dict
+            itemTypeItemDict.Add(type, item);
+
+        }
         
     }
 
@@ -40,6 +49,31 @@ public class ItemController : MonoBehaviour {
     public void UnlockItem(ItemType type) {
 
         itemTypeItemDict[type].researched = true;
+
+    }
+
+
+
+
+    // Calculate items per second produced by this building
+    public void CalculateItemsPerSecond(RecipeSO recipe, Building building) {
+
+        // Recipe time in seconds (with speed modifier)
+        int recipeTime = recipe.recipeTime * building.craftingSpeed;
+
+        foreach(ItemType item in recipe.itemAmountDict.Keys) {
+
+            float ips = recipeTime / recipe.itemAmountDict[item];
+
+            building.itemsPerSecondDict.Add(item, ips);
+
+        }
+
+    }
+    // Convert items per second into items per tick
+    public void CalculateItemsPerTick(RecipeSO recipe, Building building) {
+
+
 
     }
 

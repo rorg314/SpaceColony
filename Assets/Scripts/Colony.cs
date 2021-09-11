@@ -11,13 +11,17 @@ public class Colony {
     //////////// Colony Resources ////////////
 
     // Colony inventory dict
-    public Dictionary<Item, int> itemInventoryDict;
+    public Dictionary<ItemType, int> itemInventoryDict;
+
+    
+
 
     // Building number dict
     public Dictionary<Building, int> buildingNumberDict;
 
     //Colony power consumption
     public Power power { get; protected set; }
+
     public class Power {
         // Produced watts
         public int posWatts;
@@ -56,7 +60,7 @@ public class Colony {
 
 
         // Set up item and building number dicts
-        this.itemInventoryDict = new Dictionary<Item, int>();
+        this.itemInventoryDict = new Dictionary<ItemType, int>();
         this.buildingNumberDict = new Dictionary<Building, int>();
 
         this.power = new Power(10, 0, 0);

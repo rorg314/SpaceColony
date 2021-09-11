@@ -12,8 +12,10 @@ public class RecipeSO : ScriptableObject {
     // List of consumed resources
     public List<ItemType> consumedItems;
 
-    // Dict of resource -> units consumed 
-    public Dictionary<ItemType, int> itemConsumptionAmountDict;
+    // Dict of item -> units (consumed(-)/produced(+) per recipe 
+    public Dictionary<ItemType, int> itemAmountDict;
+
+    
 
 
     //////////// PRODUCED ITEMS ////////////
@@ -25,9 +27,7 @@ public class RecipeSO : ScriptableObject {
     public ItemType producedItem;
     // Byproduct items
     public List<ItemType> byproducts;
-
-    // Dict of resource -> units produced
-    public Dictionary<ItemType, int> itemProductionAmountDict { get; protected set; }
+    
 
     // How long the recipe takes to produce
     public int recipeTime;
