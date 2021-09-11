@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Upgrade.cs" />
     <Compile Include="Assets\Scripts\ColonyController.cs" />
+    <Compile Include="Assets\Scripts\BuildingSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

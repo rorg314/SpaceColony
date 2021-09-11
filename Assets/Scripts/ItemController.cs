@@ -33,7 +33,7 @@ public class ItemController : MonoBehaviour {
 
         itemTypeItemDict = new Dictionary<ItemType, Item>();
         
-        throw new NotImplementedException();
+        
     }
 
 
