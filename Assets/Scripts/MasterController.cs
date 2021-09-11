@@ -20,7 +20,6 @@ public class MasterController : MonoBehaviour {
     // Target FPS
     public int framerate = 60;
 
-    
 
     // On Tick action
     public event Action onTick;

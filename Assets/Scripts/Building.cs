@@ -32,8 +32,6 @@ public class Building {
 
     
 
-
-
     ///////// Colonist info /////////
 
     // Number of colonists required to operate this building
@@ -41,7 +39,6 @@ public class Building {
 
     // Colonists working in this building
     public List<Colonist> colonists;
-
 
 
     ///////// Building status /////////
@@ -63,7 +60,6 @@ public class Building {
         this.wattage = buildingSO.wattage;
         this.workload = buildingSO.workload;
 
-        
 
     }
 

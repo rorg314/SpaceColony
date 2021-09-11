@@ -13,7 +13,6 @@ public class Universe {
     // List of all planets in the universe
     public List<Planet> planets;
 
-    public Colony activeColony;
 
     public Universe() {
 
@@ -23,7 +22,7 @@ public class Universe {
         // Create a planet and colony for testing
         Planet testPlanet = new Planet(this);
         Colony testColony = new Colony(testPlanet);
-        activeColony = testColony;
+        ColonyController.instance.activeColony = testColony;
     }
 
 

@@ -9,6 +9,8 @@ public class ColonyController : MonoBehaviour {
 
     public static ColonyController instance;
 
+    public Colony activeColony;
+
     public void Start() {
         
         if (instance == null) {
@@ -25,7 +27,9 @@ public class ColonyController : MonoBehaviour {
 
     public void UpdateColony(Colony colony) {
 
-        UpdatePower(colony); 
+        UpdatePower(colony);
+
+        UpdateInventory(colony);
 
     }
 

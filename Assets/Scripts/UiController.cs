@@ -14,6 +14,10 @@ public class UiController : MonoBehaviour {
     // Colony power monitor panel
     public GameObject powerPanel;
 
+    // Colony inventory panel
+    public GameObject inventoryPanel;
+    public GameObject itemCardPrefab;
+    private Dictionary<ItemType, GameObject> itemTypeItemCardDict;
 
     private void Start() {
 
@@ -26,12 +30,21 @@ public class UiController : MonoBehaviour {
 
         MasterController.instance.onTick += UpdateUI;
 
+
+        itemTypeItemCardDict = new Dictionary<ItemType, GameObject>();
     }
 
     public void UpdateUI() {
 
+        //Unregister the callback to avoid multiple calls before method finishes
+        MasterController.instance.onTick -= UpdateUI;
+        
         UpdatePowerPanel();
 
+        UpdateInventoryPanel();
+
+        // Add back for next invoke to execute
+        MasterController.instance.onTick += UpdateUI;
     }
 
 
@@ -39,9 +52,9 @@ public class UiController : MonoBehaviour {
 
         Colony.Power power = null;
         // Get power stats for active colony
-        if(UniverseController.instance.universe.activeColony != null) {
-            if(UniverseController.instance.universe.activeColony.power != null) {
-                power = UniverseController.instance.universe.activeColony.power;
+        if(ColonyController.instance.activeColony != null) {
+            if(ColonyController.instance.activeColony.power != null) {
+                power = ColonyController.instance.activeColony.power;
             }
         }
         if(power == null) {
@@ -54,4 +67,51 @@ public class UiController : MonoBehaviour {
 
     }
 
+    public void UpdateInventoryPanel() {
+
+        Colony activeColony = ColonyController.instance.activeColony;
+
+        if (activeColony != null) {
+
+            foreach (ItemType item in activeColony.itemInventoryDict.Keys) {
+                int amount = activeColony.itemInventoryDict[item];
+                if (amount > 0) {
+                    GameObject itemCard = AddItemCard(item);
+                    UpdateItemCard(itemCard, amount);
+                }
+
+            }
+
+        }
+
+    }
+
+    public GameObject AddItemCard(ItemType item) {
+
+        // Do not add another card if card already exists
+        if (itemTypeItemCardDict.ContainsKey(item)) {
+            return itemTypeItemCardDict[item];
+        }
+
+        //GameObject itemCard = new GameObject("ItemCard " + itemType.ToString());
+        GameObject itemCard = (GameObject)Instantiate(itemCardPrefab, inventoryPanel.transform);
+        //itemCard.transform.parent = inventoryPanel.transform;
+        itemCard.transform.name = "ItemCard " + item.ToString();
+
+
+        SpriteRenderer image = itemCard.GetComponentInChildren<SpriteRenderer>();
+        image.sprite = ItemController.instance.itemTypeItemDict[item].itemSprite;
+
+        itemTypeItemCardDict.Add(item, itemCard);
+
+        return itemCard;
+    }
+
+    public void UpdateItemCard(GameObject itemCard, int amount) {
+
+        Text amountText = itemCard.GetComponentInChildren<Text>();
+
+        amountText.text = amount.ToString();
+
+    }
 }

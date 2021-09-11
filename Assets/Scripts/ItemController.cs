@@ -25,15 +25,15 @@ public class ItemController : MonoBehaviour {
             Debug.LogError("Trying to create more than one item controller!");
         }
 
+        itemTypeItemDict = new Dictionary<ItemType, Item>();
+
         // Initialise all item objects
         InitialiseAllItems();
     }
 
     // Initialise all item objects
     private void InitialiseAllItems() {
-
-        itemTypeItemDict = new Dictionary<ItemType, Item>();
-        
+       
         foreach(ItemType type in Enum.GetValues(typeof(ItemType))) {
 
             // Create the item instance

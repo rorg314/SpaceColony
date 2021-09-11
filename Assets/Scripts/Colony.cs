@@ -14,8 +14,6 @@ public class Colony {
     public Dictionary<ItemType, int> itemInventoryDict;
 
     
-
-
     // Building number dict
     public Dictionary<Building, int> buildingNumberDict;
 
@@ -64,6 +62,8 @@ public class Colony {
         this.buildingNumberDict = new Dictionary<Building, int>();
 
         this.power = new Power(10, 0, 0);
+
+        this.itemInventoryDict[ItemType.TestItem] = 100;
 
     }
     
