@@ -100,7 +100,12 @@ public class UiController : MonoBehaviour {
 
 
         SpriteRenderer image = itemCard.GetComponentInChildren<SpriteRenderer>();
-        image.sprite = ItemController.instance.itemTypeItemDict[item].itemSprite;
+        if (ItemController.instance.itemSpriteDict.ContainsKey(item)) {
+            image.sprite = ItemController.instance.itemSpriteDict[item];
+        }
+        else {
+            Debug.LogError("Trying to add sprite for item not in dict!");
+        }
 
         itemTypeItemCardDict.Add(item, itemCard);
 

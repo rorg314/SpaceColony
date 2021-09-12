@@ -55,9 +55,7 @@ public class Item {
         this.itemType = type;
         this.researched = false;
 
-        ItemController.instance.itemTypeItemDict.Add(type, this);
-
-        this.itemSprite = Resources.Load<Sprite>("Sprites/Items/" + itemType.ToString());
+        //this.itemSprite = Resources.Load<Sprite>("Sprites/Items/" + type.ToString() + ".png");
     }
 
     

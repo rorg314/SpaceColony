@@ -12,7 +12,7 @@ public class ItemController : MonoBehaviour {
 
     public Dictionary<ItemType, Item> itemTypeItemDict;
 
-    
+    public Dictionary<ItemType, Sprite> itemSpriteDict;
     
 
 
@@ -26,7 +26,7 @@ public class ItemController : MonoBehaviour {
         }
 
         itemTypeItemDict = new Dictionary<ItemType, Item>();
-
+        itemSpriteDict = new Dictionary<ItemType, Sprite>();
         // Initialise all item objects
         InitialiseAllItems();
     }
@@ -42,9 +42,22 @@ public class ItemController : MonoBehaviour {
             itemTypeItemDict.Add(type, item);
 
         }
-        
+
+        LoadAllItemSprites();
     }
 
+    private void LoadAllItemSprites() {
+
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/Items/");
+
+        foreach(Sprite s in sprites) {
+
+            ItemType item = (ItemType)Enum.Parse(typeof(ItemType), s.name);
+            itemSpriteDict.Add(item, s);
+
+        }
+
+    }
 
     public void UnlockItem(ItemType type) {
 
