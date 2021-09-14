@@ -64,6 +64,9 @@ public class Colony {
         this.power = new Power(10, 0, 0);
 
         this.itemInventoryDict[ItemType.TestItem] = 100;
+        this.itemInventoryDict[ItemType.TestItem2] = 200;
+        this.itemInventoryDict[ItemType.Test3] = 300;
+        this.itemInventoryDict[ItemType.Test4] = 400;
 
     }
     

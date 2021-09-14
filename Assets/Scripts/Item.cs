@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemType { 
     // Test item
-    TestItem,
+    TestItem, TestItem2, Test3, Test4,
     
     // Research items
     BasicResearch, AdvResearch, QuantumResearch,

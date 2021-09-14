@@ -99,9 +99,12 @@ public class UiController : MonoBehaviour {
         itemCard.transform.name = "ItemCard " + item.ToString();
 
 
-        SpriteRenderer image = itemCard.GetComponentInChildren<SpriteRenderer>();
+        //SpriteRenderer image = itemCard.GetComponentInChildren<SpriteRenderer>();
+        Image image = itemCard.GetComponentInChildren<Image>();
         if (ItemController.instance.itemSpriteDict.ContainsKey(item)) {
             image.sprite = ItemController.instance.itemSpriteDict[item];
+            //image.sortingOrder = 1;
+            //image.transform.localScale = new Vector3(80, 80, 1);
         }
         else {
             Debug.LogError("Trying to add sprite for item not in dict!");
