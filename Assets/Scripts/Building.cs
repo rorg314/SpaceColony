@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class Building {
     
     // Colony this building is in 
@@ -15,8 +18,10 @@ public class Building {
 
     // Dict of item -> items per second (consumed(-)/produced(+)
     public Dictionary<ItemType, float> itemsPerSecondDict;
-    // Dict of item -> items per second (consumed(-)/produced(+)
-    public Dictionary<ItemType, float> itemsPerTickDict;
+    // Dict of item -> ticks per item (consumed(-)/produced(+)
+    public Dictionary<ItemType, float> ticksPerItemDict;
+    // How many ticks to complete the recipe
+    public int recipeTicks;
 
     // Power consumption(-)/production(+) of this building
     public int wattage;

@@ -68,28 +68,7 @@ public class ItemController : MonoBehaviour {
 
 
 
-    // Calculate items per second produced by this building
-    public void CalculateItemsPerSecond(RecipeSO recipe, Building building) {
-
-        // Recipe time in seconds (with speed modifier)
-        int recipeTime = recipe.recipeTime * building.craftingSpeed;
-
-        foreach(ItemType item in recipe.itemAmountDict.Keys) {
-
-            float ips = recipeTime / recipe.itemAmountDict[item];
-
-            building.itemsPerSecondDict.Add(item, ips);
-
-        }
-
-    }
     
-    // Convert items per second into items per tick
-    public void TicksPerItem(RecipeSO recipe, Building building) {
-
-
-
-    }
 
 
 }

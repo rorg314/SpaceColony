@@ -12,35 +12,42 @@ public class MasterController : MonoBehaviour {
 
     // Current game speed
     public GameSpeed gameSpeed { get; protected set; }
-    // Current FPT
-    public int framesPerTick { get; protected set; }
+    
     // Frame counter for updates
     public int frameCounter { get; protected set; }
 
-    
-    
-    
+    // Epoch time in seconds since Awake()
+    public float time { get; protected set; }
+    // Epoch time that last tick occured
+    public float lastTick;
+    // Current seconds per tick 
+    public float SPT;
 
     // On Tick action
     public event Action onTick;
 
-    public int FramesPerTick(GameSpeed gameSpeed) {
+    // On speed changed action
+    public event Action onSpeedChanged;
+
+    public int getGameSpeedInt() {
         switch (gameSpeed) {
             case GameSpeed.x1:
-                return 8;
-            case GameSpeed.x2:
-                return 4;
-            case GameSpeed.x4:
-                return 2;
-            case GameSpeed.x8:
                 return 1;
+            case GameSpeed.x2:
+                return 2;
+            case GameSpeed.x4:
+                return 4;
+            case GameSpeed.x8:
+                return 8;
             default:
                 break;
         }
-        return 1;
+        return 8;
     }
 
-    public float TPS(GameSpeed gameSpeed) {
+
+    // Ticks per second
+    public int getTPS() {
         switch (gameSpeed) {
             case GameSpeed.x1:
                 return 8;
@@ -53,13 +60,32 @@ public class MasterController : MonoBehaviour {
             default:
                 break;
         }
-        return 1;
-
-
-
+        return 8;
+    }
+    // Seconds per tick
+    public float getSPT() {
+        switch (gameSpeed) {
+            case GameSpeed.x1:
+                return 0.125f; // 1/8
+            case GameSpeed.x2:
+                return 0.0625f; // 1/16
+            case GameSpeed.x4:
+                return 0.03125f; // 1/32 
+            case GameSpeed.x8:
+                return 0.015625f; // 1/64
+            default:
+                break;
+        }
+        return 8;
     }
 
-    
+    // Convert a second interval to number of ticks
+    public int GetTicksInInterval(float seconds) {
+        float rawTicks = seconds / SPT;
+        // Round rawTicks to integer number of ticks (might want to adjust this)
+        return Mathf.RoundToInt(rawTicks);
+    }
+
 
     public void Awake() {
 
@@ -71,29 +97,44 @@ public class MasterController : MonoBehaviour {
         }
         
         gameSpeed = GameSpeed.x1;
-        framesPerTick = FramesPerTick(gameSpeed);
-        frameCounter = 0;
+        SPT = getSPT();
+        time = 0f;
+        lastTick = 0f;
+        Debug.Log(gameSpeed);
+        // Initial tick
+        
+        //framesPerTick = FramesPerTick(gameSpeed);
+        //frameCounter = 0;
         //onTick += debugTick;
 
         //QualitySettings.vSyncCount = 0;
         //Application.targetFrameRate = 60;
     }
 
-    // Called every frame 
+    
+
+    // Called every frame
     public void Update() {
 
-        frameCounter++;
+        //frameCounter++;
+        // Increase epoch time in seconds
+        time += Time.deltaTime;
 
-        if(frameCounter >= framesPerTick) {
+        if(time - lastTick >= SPT) {
             Tick();
-            frameCounter = 0;
         }
+
+        //if(frameCounter >= framesPerTick) {
+        //    Tick();
+        //    frameCounter = 0;
+        //}
 
     }
 
     // Actual ingame logic tick invocation
     public void Tick() {
-
+        
+        lastTick = time;
         onTick?.Invoke();
 
     }
@@ -114,8 +155,10 @@ public class MasterController : MonoBehaviour {
                 gameSpeed = GameSpeed.x1;
                 break;
         }
-        
-        framesPerTick = FramesPerTick(gameSpeed);
+        Debug.Log(gameSpeed);
+        SPT = getSPT();
+
+        onSpeedChanged?.Invoke();
     }
 
     

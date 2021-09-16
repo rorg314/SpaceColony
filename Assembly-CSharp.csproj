@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\UiController.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Upgrade.cs" />
+    <Compile Include="Assets\Scripts\BuildingController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

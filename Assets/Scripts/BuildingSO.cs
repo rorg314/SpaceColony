@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum BuildingType {
 
-    Test
+    Test, Test2
 
 }
 
