@@ -20,9 +20,7 @@ public class RecipeSO : ScriptableObject {
 
     //////////// PRODUCED ITEMS ////////////
 
-    // List of items + byproducts produced by this producer
-    public List<ItemType> allProducedItems;
-
+    
     // Item produced by this recipe
     public ItemType producedItem;
     // Byproduct items

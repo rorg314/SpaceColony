@@ -56,7 +56,7 @@ public class Building {
 
 
     // Prototype constructor
-    public Building(BuildingSO buildingSO, RecipeSO recipeSO, RecipeSO buildRecipeSO) {
+    public Building(BuildingSO buildingSO) {
 
         this.buildingSO = buildingSO;
 

@@ -9,6 +9,8 @@ public class BuildingController : MonoBehaviour {
     public static BuildingController instance;
 
 
+    public Dictionary<BuildingType, Building> buildingPrototypesDict;
+
     public Dictionary<BuildingType, List<Building>> buildingTypeInstanceListDict;
 
 
@@ -69,6 +71,20 @@ public class BuildingController : MonoBehaviour {
         int realRecipeTime = baseRecipeTime / MasterController.instance.getGameSpeedInt();
 
         building.recipeTicks = MasterController.instance.GetTicksInInterval(realRecipeTime);
+
+    }
+
+
+    public void CreateAllBuildingPrototypes() {
+
+        BuildingSO[] buildingSOs = Resources.LoadAll<BuildingSO>("ScriptableObjects/Buildings");
+
+        foreach(BuildingSO bSO in buildingSOs) {
+
+            Building proto = new Building(bSO);
+            buildingPrototypesDict.Add(bSO.buildingType, proto);
+
+        }
 
     }
 
