@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Universe.cs" />
     <Compile Include="Assets\Scripts\MasterController.cs" />
+    <Compile Include="Assets\Scripts\ColonyController.cs" />
     <Compile Include="Assets\Scripts\World.cs" />
     <Compile Include="Assets\Scripts\UniverseController.cs" />
     <Compile Include="Assets\Scripts\ItemController.cs" />
@@ -65,12 +66,11 @@
     <Compile Include="Assets\Scripts\Building.cs" />
     <Compile Include="Assets\Scripts\Colonist.cs" />
     <Compile Include="Assets\Scripts\Colony.cs" />
+    <Compile Include="Assets\Scripts\BuildingSO.cs" />
     <Compile Include="Assets\Scripts\RecipeSO.cs" />
     <Compile Include="Assets\Scripts\UiController.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Upgrade.cs" />
-    <Compile Include="Assets\Scripts\ColonyController.cs" />
-    <Compile Include="Assets\Scripts\BuildingSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -17,28 +17,49 @@ public class MasterController : MonoBehaviour {
     // Frame counter for updates
     public int frameCounter { get; protected set; }
 
-    // Target FPS
-    public int framerate = 60;
-
+    
+    
+    
 
     // On Tick action
     public event Action onTick;
 
     public int FramesPerTick(GameSpeed gameSpeed) {
         switch (gameSpeed) {
-            case GameSpeed.x1 :
+            case GameSpeed.x1:
                 return 8;
-            case GameSpeed.x2 :
+            case GameSpeed.x2:
                 return 4;
-            case GameSpeed.x4 :
+            case GameSpeed.x4:
                 return 2;
-            case GameSpeed.x8 :
+            case GameSpeed.x8:
                 return 1;
             default:
                 break;
         }
         return 1;
     }
+
+    public float TPS(GameSpeed gameSpeed) {
+        switch (gameSpeed) {
+            case GameSpeed.x1:
+                return 8;
+            case GameSpeed.x2:
+                return 16;
+            case GameSpeed.x4:
+                return 32;
+            case GameSpeed.x8:
+                return 64;
+            default:
+                break;
+        }
+        return 1;
+
+
+
+    }
+
+    
 
     public void Awake() {
 
@@ -54,8 +75,8 @@ public class MasterController : MonoBehaviour {
         frameCounter = 0;
         //onTick += debugTick;
 
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
+        //QualitySettings.vSyncCount = 0;
+        //Application.targetFrameRate = 60;
     }
 
     // Called every frame 
@@ -97,6 +118,7 @@ public class MasterController : MonoBehaviour {
         framesPerTick = FramesPerTick(gameSpeed);
     }
 
+    
 
     //public void debugTick() {
 

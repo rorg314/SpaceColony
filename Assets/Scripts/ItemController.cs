@@ -83,8 +83,9 @@ public class ItemController : MonoBehaviour {
         }
 
     }
+    
     // Convert items per second into items per tick
-    public void CalculateItemsPerTick(RecipeSO recipe, Building building) {
+    public void TicksPerItem(RecipeSO recipe, Building building) {
 
 
 
