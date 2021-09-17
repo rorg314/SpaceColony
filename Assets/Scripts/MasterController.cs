@@ -80,7 +80,7 @@ public class MasterController : MonoBehaviour {
     }
 
     // Convert a second interval to number of ticks
-    public int GetTicksInInterval(float seconds) {
+    public int GetTicksInRealtimeInterval(float seconds) {
         float rawTicks = seconds / SPT;
         // Round rawTicks to integer number of ticks (might want to adjust this)
         return Mathf.RoundToInt(rawTicks);
@@ -100,7 +100,7 @@ public class MasterController : MonoBehaviour {
         SPT = getSPT();
         time = 0f;
         lastTick = 0f;
-        Debug.Log(gameSpeed);
+        
         // Initial tick
         
         //framesPerTick = FramesPerTick(gameSpeed);

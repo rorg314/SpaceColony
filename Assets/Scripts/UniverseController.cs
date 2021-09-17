@@ -25,6 +25,7 @@ public class UniverseController : MonoBehaviour {
         }
 
         MasterController.instance.onTick += UpdateAllPlanets;
+        MasterController.instance.onTick += ColonyController.instance.UpdateActiveColony;
 
     }
 
@@ -33,7 +34,7 @@ public class UniverseController : MonoBehaviour {
         foreach(Planet p in universe.planets) {
 
             //Update planet colony
-            ColonyController.instance.UpdateColony(p.colony);
+            //ColonyController.instance.UpdateColony(p.colony);
 
         }
 

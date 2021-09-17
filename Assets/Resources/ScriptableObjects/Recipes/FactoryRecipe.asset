@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: FactoryRecipe
   m_EditorClassIdentifier: 
   consumedItems: 02000000
+  consumedItemsAmount: 05000000
   producedItem: 3
+  producedItemAmount: 1
   byproducts: 
-  recipeTime: 0
+  byproductsItemsAmount: 
+  recipeTime: 5

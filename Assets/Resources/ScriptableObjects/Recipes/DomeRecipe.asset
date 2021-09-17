@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: DomeRecipe
   m_EditorClassIdentifier: 
   consumedItems: 00000000
+  consumedItemsAmount: 02000000
   producedItem: 1
+  producedItemAmount: 1
   byproducts: 
-  recipeTime: 0
+  byproductsItemsAmount: 
+  recipeTime: 1

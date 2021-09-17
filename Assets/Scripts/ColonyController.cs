@@ -21,15 +21,15 @@ public class ColonyController : MonoBehaviour {
             Debug.LogError("Trying to create more than one colony controller!");
         }
 
-        
+                
     }
 
 
-    public void UpdateColony(Colony colony) {
+    public void UpdateActiveColony() {
+        
+        UpdatePower(activeColony);
 
-        UpdatePower(colony);
-
-        UpdateAllBuildingRecipeTicks(colony);
+        UpdateAllBuildingRecipeTicks(activeColony);
 
     }
 
@@ -52,20 +52,23 @@ public class ColonyController : MonoBehaviour {
     public void UpdateAllBuildingRecipeTicks(Colony colony) {
 
         foreach(BuildingType type in Enum.GetValues(typeof(ItemType))) {
+            if (BuildingController.instance.buildingTypeInstanceListDict.ContainsKey(type)){
+                List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
+                if(allBuildings.Count > 0) {
+                    foreach (Building b in allBuildings) {
+                        if (b.ticks < b.recipeTicks) {
+                            b.ticks++;
+                        }
 
-            List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
-            foreach(Building b in allBuildings) {
-                if(b.ticks < b.recipeTicks) {
-                    b.ticks++;
-                }
-                
-                foreach(ItemType item in b.ticksPerItemDict.Keys) {
-                    if( b.ticksPerItemDict[item] >= b.ticks ) {
-                        ConsumeItem(colony, item);
+                        foreach (ItemType item in b.ticksPerItemDict.Keys) {
+                            if (b.ticksPerItemDict[item] >= b.ticks) {
+                                ConsumeItem(colony, item);
+                            }
+                        }
                     }
                 }
+                
             }
-
 
         }
 
@@ -77,6 +80,7 @@ public class ColonyController : MonoBehaviour {
 
         if(colony.itemInventoryDict[item] > 0) {
             colony.itemInventoryDict[item] -= 1;
+            UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
         }
 
     }

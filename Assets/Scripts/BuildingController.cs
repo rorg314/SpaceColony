@@ -42,6 +42,8 @@ public class BuildingController : MonoBehaviour {
 
     // Calculate items per second produced by this building
     public void CalculateItemsPerSecond(RecipeSO recipe, Building building) {
+        
+
 
         // Recipe time in seconds (with speed modifier)
         int recipeTime = recipe.recipeTime * building.craftingSpeed;
@@ -53,7 +55,8 @@ public class BuildingController : MonoBehaviour {
             building.itemsPerSecondDict.Add(item, ips);
 
         }
-
+        //Recipe ticks
+        SetTicksPerRecipe(building);
     }
 
     public void RecalculateAllBuildingTickSpeeds() {
@@ -79,15 +82,15 @@ public class BuildingController : MonoBehaviour {
         // Actual time in seconds for recipe adjusted for game speed
         int realRecipeTime = baseRecipeTime / MasterController.instance.getGameSpeedInt();
 
-        building.recipeTicks = MasterController.instance.GetTicksInInterval(realRecipeTime);
+        building.recipeTicks = MasterController.instance.GetTicksInRealtimeInterval(realRecipeTime);
 
         SetTicksPerItem(building);
     }
 
     public void SetTicksPerItem(Building building) {
         foreach(ItemType item in building.itemsPerSecondDict.Keys) {
-
-            building.ticksPerItemDict[item] = MasterController.instance.GetTicksInInterval(building.itemsPerSecondDict[item]);
+            //Ticks in interval (adjusted to game speed)
+            building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.itemsPerSecondDict[item]);
 
         }
     }

@@ -59,6 +59,22 @@ public class Building {
     public bool isProducing;
 
 
+    public void CalculateItemsPerSecondDict() {
+
+        itemsPerSecondDict.Add(buildingSO.recipe.producedItem, buildingSO.recipe.recipeTime / buildingSO.recipe.producedItemAmount);
+
+        foreach (ItemType item in buildingSO.recipe.consumedItemsAmount) {
+            itemsPerSecondDict.Add(item, -buildingSO.recipe.recipeTime / buildingSO.recipe.consumedItemsAmount[buildingSO.recipe.consumedItems.IndexOf(item)]);
+        }
+
+        foreach (ItemType item in buildingSO.recipe.byproductItemsAmount) {
+            itemsPerSecondDict.Add(item, buildingSO.recipe.recipeTime / buildingSO.recipe.byproductItemsAmount[buildingSO.recipe.byproductItems.IndexOf(item)]);
+        }
+
+
+    }
+
+
     // Prototype constructor
     public Building(BuildingSO buildingSO) {
 
@@ -71,6 +87,10 @@ public class Building {
 
         this.ticks = 0;
         this.recipeTicks = 0;
+
+        this.ticksPerItemDict = new Dictionary<ItemType, float>();
+
+        BuildingController.instance.CalculateItemsPerSecond(buildingSO.recipe, this);
     }
 
     // Instance copy constructor 
@@ -83,8 +103,9 @@ public class Building {
         this.wattage = other.wattage;
         this.workload = other.workload;
 
-        this.ticks = 0;
-        this.recipeTicks = 0;
+        this.ticks = other.ticks;
+        this.recipeTicks = other.recipeTicks;
+        this.ticksPerItemDict = other.ticksPerItemDict;
     }
 
 
