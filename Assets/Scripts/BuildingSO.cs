@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum BuildingType {
 
-    Test, Test2
+    Dome, Factory
 
 }
 
@@ -23,5 +23,7 @@ public class BuildingSO : ScriptableObject {
 
     // Recipe object produced by this building
     public RecipeSO recipe;
+
+    public Sprite sprite;
 
 }

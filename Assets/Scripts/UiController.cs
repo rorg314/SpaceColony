@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 
 public class UiController : MonoBehaviour {
@@ -17,7 +18,12 @@ public class UiController : MonoBehaviour {
     // Colony inventory panel
     public GameObject inventoryPanel;
     public GameObject itemCardPrefab;
-    private Dictionary<ItemType, GameObject> itemTypeItemCardDict;
+    public Dictionary<ItemType, GameObject> itemTypeItemCardDict;
+
+    //Building panel
+    public GameObject buildingPanel;
+    public GameObject buildingCardPrefab;
+    public Dictionary<BuildingType, GameObject> buildingTypeCardDict;
 
     private void Start() {
 
@@ -30,8 +36,11 @@ public class UiController : MonoBehaviour {
 
         MasterController.instance.onTick += UpdateUI;
 
-
+        // Item and building card dicts
         itemTypeItemCardDict = new Dictionary<ItemType, GameObject>();
+        buildingTypeCardDict = new Dictionary<BuildingType, GameObject>();
+
+        AddAllBuildingCards();
     }
 
     public void UpdateUI() {
@@ -120,6 +129,50 @@ public class UiController : MonoBehaviour {
         Text amountText = itemCard.GetComponentInChildren<Text>();
 
         amountText.text = amount.ToString();
+
+    }
+
+    public void AddAllBuildingCards() {
+
+        foreach (BuildingType type in Enum.GetValues(typeof(BuildingType))) {
+            
+            GameObject buildingCard = (GameObject)Instantiate(buildingCardPrefab, UiController.instance.buildingPanel.transform);
+            buildingCard.transform.name = "BuildingCard: " + type.ToString();
+            
+            buildingTypeCardDict.Add(type, buildingCard);
+            
+            Transform[] children = buildingCard.transform.GetComponentsInChildren<Transform>();
+
+            foreach (Transform t in children) {
+                //Debug.Log(t.name);
+                if (t.name == "BuildingImage") {
+                    t.gameObject.GetComponent<Image>().sprite = BuildingController.instance.buildingPrototypesDict[type].buildingSO.sprite;
+                }
+                if (t.name == "Add") {
+
+                    t.gameObject.GetComponent<Button>().onClick.AddListener(() => BuildingController.instance.invokeBuildingAdded(type));
+
+                }
+                if (t.name == "Subtract") {
+
+                    t.gameObject.GetComponent<Button>().onClick.AddListener(() => BuildingController.instance.invokeBuildingRemoved(type));
+
+                }
+            }
+        }
+
+    }
+
+
+    public void UpdateBuildingCardNumber(GameObject card, int amount) {
+
+        RectTransform[] children = card.GetComponentsInChildren<RectTransform>();
+        foreach (RectTransform t in children) {
+            //Debug.Log(t.name);
+            if (t.name == "BuildingNumberText") {
+                t.gameObject.GetComponent<Text>().text = amount.ToString().Split('.')[0];
+            }
+        }
 
     }
 }

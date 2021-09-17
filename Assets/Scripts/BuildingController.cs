@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class BuildingController : MonoBehaviour {
 
 
     public static BuildingController instance;
+
+    public event Action<BuildingType> onBuildingAdded;
+    public event Action<BuildingType> onBuildingRemoved;
 
 
     public Dictionary<BuildingType, Building> buildingPrototypesDict;
@@ -23,10 +27,15 @@ public class BuildingController : MonoBehaviour {
         }
 
         buildingTypeInstanceListDict = new Dictionary<BuildingType, List<Building>>();
-
+        buildingPrototypesDict = new Dictionary<BuildingType, Building>();
 
         // Assign recalculate tick times to onSpeedChanged
         MasterController.instance.onSpeedChanged += RecalculateAllBuildingTickSpeeds;
+
+        CreateAllBuildingPrototypes();
+
+        onBuildingAdded += addBuildingToColony;
+        onBuildingRemoved += RemoveBuildingFromColony;
     }
 
 
@@ -83,12 +92,65 @@ public class BuildingController : MonoBehaviour {
 
             Building proto = new Building(bSO);
             buildingPrototypesDict.Add(bSO.buildingType, proto);
-
+            buildingTypeInstanceListDict.Add(bSO.buildingType, new List<Building>());
         }
 
     }
 
+    public Building AddBuildingToColony(BuildingType buildingType) {
 
 
+        Building proto = buildingPrototypesDict[buildingType];
+
+        Building instance = new Building(proto);
+
+        buildingTypeInstanceListDict[buildingType].Add(instance);
+
+
+
+        return instance;
+    }
+
+    public void invokeBuildingAdded(BuildingType type) {
+        onBuildingAdded?.Invoke(type);
+    }
+    public void invokeBuildingRemoved(BuildingType type) {
+        onBuildingRemoved?.Invoke(type);
+    }
+
+    // On building added event
+    public void addBuildingToColony(BuildingType buildingType) {
+
+        Building proto = buildingPrototypesDict[buildingType];
+
+        Building instance = new Building(proto);
+
+        buildingTypeInstanceListDict[buildingType].Add(instance);
+
+        int amount = buildingTypeInstanceListDict[buildingType].Count;
+
+        UiController.instance.UpdateBuildingCardNumber(UiController.instance.buildingTypeCardDict[buildingType], amount);
+
+        Debug.Log("Building added");
+
+    }
+
+    public void RemoveBuildingFromColony(BuildingType type) {
+
+        int amount = buildingTypeInstanceListDict[type].Count - 1;
+
+        if (amount < 0) {
+            return;
+        }
+
+        UiController.instance.UpdateBuildingCardNumber(UiController.instance.buildingTypeCardDict[type], amount);
+
+        Building instance = buildingTypeInstanceListDict[type][0];
+
+        buildingTypeInstanceListDict[type].Remove(instance);
+
+        Debug.Log("Building removed");
+    }
+    
 
 }

@@ -4,34 +4,34 @@ using UnityEngine;
 
 public enum ItemType { 
     // Test item
-    TestItem, TestItem2, Test3, Test4,
+    Coffee, Book, GreenCircuit, GreenScience,
     
-    // Research items
-    BasicResearch, AdvResearch, QuantumResearch,
+    //// Research items
+    //BasicResearch, AdvResearch, QuantumResearch,
     
-    // Primitive resources
-    Oxygen, Water, Hydrogen, CO2, Nitrogen,
+    //// Primitive resources
+    //Oxygen, Water, Hydrogen, CO2, Nitrogen,
     
-    // Foods
-    BasicFood, GourmetFood, Algae, FruitVeg, Meat, SynthMeat,
+    //// Foods
+    //BasicFood, GourmetFood, Algae, FruitVeg, Meat, SynthMeat,
      
-    // Basic resources 
-    Ice, Rock, Coal, CrudeOil, MetalOre, 
+    //// Basic resources 
+    //Ice, Rock, Coal, CrudeOil, MetalOre, 
     
-    // Adv resources
-    RareMetalOre, UraniumOre, SiliconOre, Tritium,
+    //// Adv resources
+    //RareMetalOre, UraniumOre, SiliconOre, Tritium,
     
-    // Refined items
-    Sand, Metals, RareMetals, Petroleum, Aromatics, EnrichedUranium, Silicon,  
+    //// Refined items
+    //Sand, Metals, RareMetals, Petroleum, Aromatics, EnrichedUranium, Silicon,  
 
-    // Fabricated items
-    Concrete, BasicCircuit, MachineParts, Polymers, BasicMeds, AdvMeds, 
+    //// Fabricated items
+    //Concrete, BasicCircuit, MachineParts, Polymers, BasicMeds, AdvMeds, 
 
-    // Adv Fabricated
-    OpticalFibres, Graphene, Nanomaterial, AdvCircuit, Processor,
+    //// Adv Fabricated
+    //OpticalFibres, Graphene, Nanomaterial, AdvCircuit, Processor,
 
-    // Quantum Items
-    Superconductors, QuantumProcessor, WeightlessMaterial, QuarkGluonPlasma, Antihydrogen, 
+    //// Quantum Items
+    //Superconductors, QuantumProcessor, WeightlessMaterial, QuarkGluonPlasma, Antihydrogen, 
 
 }
 
