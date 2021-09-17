@@ -12,7 +12,6 @@ public class Colony {
 
     // Colony inventory dict
     public Dictionary<ItemType, int> itemInventoryDict;
-
     
     // Building number dict
     public Dictionary<Building, int> buildingNumberDict;
@@ -46,8 +45,6 @@ public class Colony {
     }
     
     
-
-
     public Colony(Planet planet) {
 
         // Associate planet <-> colony

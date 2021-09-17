@@ -81,6 +81,15 @@ public class BuildingController : MonoBehaviour {
 
         building.recipeTicks = MasterController.instance.GetTicksInInterval(realRecipeTime);
 
+        SetTicksPerItem(building);
+    }
+
+    public void SetTicksPerItem(Building building) {
+        foreach(ItemType item in building.itemsPerSecondDict.Keys) {
+
+            building.ticksPerItemDict[item] = MasterController.instance.GetTicksInInterval(building.itemsPerSecondDict[item]);
+
+        }
     }
 
 
@@ -131,6 +140,8 @@ public class BuildingController : MonoBehaviour {
 
         UiController.instance.UpdateBuildingCardNumber(UiController.instance.buildingTypeCardDict[buildingType], amount);
 
+        CalculateItemsPerSecond(instance.buildingSO.recipe, instance);
+
         Debug.Log("Building added");
 
     }
@@ -151,6 +162,8 @@ public class BuildingController : MonoBehaviour {
 
         Debug.Log("Building removed");
     }
+
+    
     
 
 }

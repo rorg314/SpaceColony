@@ -20,8 +20,12 @@ public class Building {
     public Dictionary<ItemType, float> itemsPerSecondDict;
     // Dict of item -> ticks per item (consumed(-)/produced(+)
     public Dictionary<ItemType, float> ticksPerItemDict;
-    // How many ticks to complete the recipe
+
+    // How many ticks the recipe takes to complete
     public int recipeTicks;
+
+    // Counts how many ticks have elapsed since the last recipe completed
+    public int ticks;
 
     // Power consumption(-)/production(+) of this building
     public int wattage;
@@ -65,7 +69,8 @@ public class Building {
         this.wattage = buildingSO.wattage;
         this.workload = buildingSO.workload;
 
-
+        this.ticks = 0;
+        this.recipeTicks = 0;
     }
 
     // Instance copy constructor 
@@ -78,6 +83,8 @@ public class Building {
         this.wattage = other.wattage;
         this.workload = other.workload;
 
+        this.ticks = 0;
+        this.recipeTicks = 0;
     }
 
 
