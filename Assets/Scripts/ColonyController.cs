@@ -61,10 +61,15 @@ public class ColonyController : MonoBehaviour {
                         }
 
                         foreach (ItemType item in b.ticksPerItemDict.Keys) {
-                            if (b.ticksPerItemDict[item] >= b.ticks) {
+                            if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {
                                 ConsumeItem(colony, item);
                             }
+                            else if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] > 0) {
+                                ProduceItem(colony, item);
+                            }
                         }
+
+                        
                     }
                 }
                 
@@ -82,6 +87,13 @@ public class ColonyController : MonoBehaviour {
             colony.itemInventoryDict[item] -= 1;
             UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
         }
+
+    }
+
+    public void ProduceItem(Colony colony, ItemType item) {
+
+        colony.itemInventoryDict[item] += 1;
+        UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
 
     }
 }

@@ -39,38 +39,46 @@ public class BuildingController : MonoBehaviour {
     }
 
 
+    // Add item amounts to building dict
+    public void SetItemAmountDict(Building proto) {
+        RecipeSO recipe = proto.buildingSO.recipe;
+
+        proto.itemAmountDict.Add(recipe.producedItem, recipe.producedItemAmount);
+        foreach (ItemType item in recipe.consumedItems) {
+            proto.itemAmountDict.Add(item, - recipe.consumedItemsAmount[recipe.consumedItems.IndexOf(item)]);
+        }
+        foreach (ItemType item in recipe.byproductItems) {
+            proto.itemAmountDict.Add(item, recipe.byproductItemsAmount[recipe.byproductItems.IndexOf(item)]);
+        }
+
+        recipe.itemAmountDict = proto.itemAmountDict;
+
+    }
 
     // Calculate items per second produced by this building
     public void CalculateItemsPerSecond(RecipeSO recipe, Building building) {
-        
-
 
         // Recipe time in seconds (with speed modifier)
         int recipeTime = recipe.recipeTime * building.craftingSpeed;
 
-        foreach (ItemType item in recipe.itemAmountDict.Keys) {
+        foreach (ItemType item in building.itemAmountDict.Keys) {
 
-            float ips = recipeTime / recipe.itemAmountDict[item];
-
-            building.itemsPerSecondDict.Add(item, ips);
-
+            float ips =  (float)building.itemAmountDict[item] / (float)recipeTime;
+            float spi = (float)recipeTime / (float)building.itemAmountDict[item];
+            if (building.itemsPerSecondDict.ContainsKey(item) == false) {
+                building.itemsPerSecondDict.Add(item, ips);
+                building.secondsPerItemDict.Add(item, spi);
+            }
+            else {
+                building.itemsPerSecondDict[item] = ips;
+                building.secondsPerItemDict[item] = spi;
+            }
         }
         //Recipe ticks
         SetTicksPerRecipe(building);
     }
 
-    public void RecalculateAllBuildingTickSpeeds() {
-
-        foreach(BuildingType type in Enum.GetValues(typeof(ItemType))) {
-            if (buildingTypeInstanceListDict.ContainsKey(type)) {
-                foreach (Building b in buildingTypeInstanceListDict[type]) {
-                    SetTicksPerRecipe(b);
-                }
-            }
-            
-        }
-
-    }
+    
 
 
     // Convert items per second into ticks per item - calculated each time speed changes
@@ -90,11 +98,28 @@ public class BuildingController : MonoBehaviour {
     public void SetTicksPerItem(Building building) {
         foreach(ItemType item in building.itemsPerSecondDict.Keys) {
             //Ticks in interval (adjusted to game speed)
-            building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.itemsPerSecondDict[item]);
+            if (building.ticksPerItemDict.ContainsKey(item) == false){
+                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.itemsPerSecondDict[item]));
+            }
+            else {
+                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.itemsPerSecondDict[item]);
+            }
 
         }
     }
 
+    public void RecalculateAllBuildingTickSpeeds() {
+
+        foreach (BuildingType type in Enum.GetValues(typeof(ItemType))) {
+            if (buildingTypeInstanceListDict.ContainsKey(type)) {
+                foreach (Building b in buildingTypeInstanceListDict[type]) {
+                    SetTicksPerRecipe(b);
+                }
+            }
+
+        }
+
+    }
 
     public void CreateAllBuildingPrototypes() {
 
@@ -105,9 +130,16 @@ public class BuildingController : MonoBehaviour {
             Building proto = new Building(bSO);
             buildingPrototypesDict.Add(bSO.buildingType, proto);
             buildingTypeInstanceListDict.Add(bSO.buildingType, new List<Building>());
+            
+            SetItemAmountDict(proto);
+            CalculateItemsPerSecond(proto.buildingSO.recipe, proto);
         }
 
     }
+
+
+
+
 
     public Building AddBuildingToColony(BuildingType buildingType) {
 
@@ -166,6 +198,7 @@ public class BuildingController : MonoBehaviour {
         Debug.Log("Building removed");
     }
 
+    
     
     
 

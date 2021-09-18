@@ -16,8 +16,12 @@ public class Building {
 
     public BuildingSO buildingSO;
 
+    // Dict of item-> item amount per recipe
+    public Dictionary<ItemType, int> itemAmountDict;
     // Dict of item -> items per second (consumed(-)/produced(+)
     public Dictionary<ItemType, float> itemsPerSecondDict;
+    // Dict of item -> seconds per item (consumed(-)/produced(+)
+    public Dictionary<ItemType, float> secondsPerItemDict;
     // Dict of item -> ticks per item (consumed(-)/produced(+)
     public Dictionary<ItemType, float> ticksPerItemDict;
 
@@ -59,20 +63,23 @@ public class Building {
     public bool isProducing;
 
 
-    public void CalculateItemsPerSecondDict() {
+    //public void CalculateItemsPerSecondDict() {
 
-        itemsPerSecondDict.Add(buildingSO.recipe.producedItem, buildingSO.recipe.recipeTime / buildingSO.recipe.producedItemAmount);
+        
 
-        foreach (ItemType item in buildingSO.recipe.consumedItemsAmount) {
-            itemsPerSecondDict.Add(item, -buildingSO.recipe.recipeTime / buildingSO.recipe.consumedItemsAmount[buildingSO.recipe.consumedItems.IndexOf(item)]);
-        }
+    //    itemsPerSecondDict.Add(buildingSO.recipe.producedItem, buildingSO.recipe.recipeTime / buildingSO.recipe.producedItemAmount);
 
-        foreach (ItemType item in buildingSO.recipe.byproductItemsAmount) {
-            itemsPerSecondDict.Add(item, buildingSO.recipe.recipeTime / buildingSO.recipe.byproductItemsAmount[buildingSO.recipe.byproductItems.IndexOf(item)]);
-        }
+    //    foreach (ItemType item in buildingSO.recipe.consumedItems) {
+    //        itemsPerSecondDict.Add(item, -buildingSO.recipe.recipeTime / buildingSO.recipe.consumedItemsAmount[buildingSO.recipe.consumedItems.IndexOf(item)]);
+    //    }
 
+    //    foreach (ItemType item in buildingSO.recipe.byproductItems) {
+    //        itemsPerSecondDict.Add(item, buildingSO.recipe.recipeTime / buildingSO.recipe.byproductItemsAmount[buildingSO.recipe.byproductItems.IndexOf(item)]);
+    //    }
 
-    }
+    //    //BuildingController.instance.RecalculateItemsPerSecond(this.buildingSO.recipe, this);
+
+    //}
 
 
     // Prototype constructor
@@ -89,8 +96,12 @@ public class Building {
         this.recipeTicks = 0;
 
         this.ticksPerItemDict = new Dictionary<ItemType, float>();
-
-        BuildingController.instance.CalculateItemsPerSecond(buildingSO.recipe, this);
+        this.itemsPerSecondDict = new Dictionary<ItemType, float>();
+        this.secondsPerItemDict = new Dictionary<ItemType, float>();
+        this.itemAmountDict = new Dictionary<ItemType, int>();
+        //CalculateItemsPerSecondDict();
+        // Doing this when create all prototypes
+        //BuildingController.instance.CalculateItemsPerSecond(buildingSO.recipe, this);
     }
 
     // Instance copy constructor 
@@ -106,6 +117,9 @@ public class Building {
         this.ticks = other.ticks;
         this.recipeTicks = other.recipeTicks;
         this.ticksPerItemDict = other.ticksPerItemDict;
+        this.itemsPerSecondDict = other.itemsPerSecondDict;
+        this.itemAmountDict = other.itemAmountDict;
+        this.secondsPerItemDict = other.secondsPerItemDict;
     }
 
 
