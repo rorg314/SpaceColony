@@ -56,9 +56,11 @@ public class ColonyController : MonoBehaviour {
                 List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
                 if(allBuildings.Count > 0) {
                     foreach (Building b in allBuildings) {
-                        if (b.ticks < b.recipeTicks) {
-                            b.ticks++;
-                        }
+                        //if (b.ticks < b.recipeTicks) {
+                        //    b.ticks++;
+                        //}
+
+                        b.ticks++;
 
                         foreach (ItemType item in b.ticksPerItemDict.Keys) {
                             if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {

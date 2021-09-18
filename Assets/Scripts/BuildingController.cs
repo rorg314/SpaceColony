@@ -78,8 +78,6 @@ public class BuildingController : MonoBehaviour {
         SetTicksPerRecipe(building);
     }
 
-    
-
 
     // Convert items per second into ticks per item - calculated each time speed changes
     public void SetTicksPerRecipe(Building building) {
@@ -99,10 +97,10 @@ public class BuildingController : MonoBehaviour {
         foreach(ItemType item in building.itemsPerSecondDict.Keys) {
             //Ticks in interval (adjusted to game speed)
             if (building.ticksPerItemDict.ContainsKey(item) == false){
-                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.itemsPerSecondDict[item]));
+                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]));
             }
             else {
-                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.itemsPerSecondDict[item]);
+                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]);
             }
 
         }
