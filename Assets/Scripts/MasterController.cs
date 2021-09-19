@@ -50,34 +50,51 @@ public class MasterController : MonoBehaviour {
     public int getTPS() {
         switch (gameSpeed) {
             case GameSpeed.x1:
-                return 8;
+                return 4;
             case GameSpeed.x2:
-                return 16;
+                return 8;
             case GameSpeed.x4:
-                return 32;
+                return 16;
             case GameSpeed.x8:
-                return 64;
+                return 32;
             default:
                 break;
         }
         return 8;
     }
     // Seconds per tick
+    //public float getSPT() {
+    //    switch (gameSpeed) {
+    //        case GameSpeed.x1:
+    //            return 0.125f; // 1/8f
+    //        case GameSpeed.x2:
+    //            return 0.0625f; // 1/16f
+    //        case GameSpeed.x4:
+    //            return 0.03125f; // 1/32f 
+    //        case GameSpeed.x8:
+    //            return 0.015625f; // 1/64f
+    //        default:
+    //            break;
+    //    }
+    //    return 8;
+    //}
+    // Seconds per tick
     public float getSPT() {
         switch (gameSpeed) {
             case GameSpeed.x1:
-                return 0.125f; // 1/8
+                return 1/4f;
             case GameSpeed.x2:
-                return 0.0625f; // 1/16
+                return 1/8f;
             case GameSpeed.x4:
-                return 0.03125f; // 1/32 
+                return 1/16f;
             case GameSpeed.x8:
-                return 0.015625f; // 1/64
+                return 1/32f;
             default:
                 break;
         }
         return 8;
     }
+
 
     // Convert a second interval to number of ticks
     public int GetTicksInRealtimeInterval(float seconds) {

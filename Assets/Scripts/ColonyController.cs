@@ -64,10 +64,19 @@ public class ColonyController : MonoBehaviour {
 
                         foreach (ItemType item in b.ticksPerItemDict.Keys) {
                             if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {
-                                ConsumeItem(colony, item);
+                                ConsumeItem(colony, b, item);
                             }
                             else if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] > 0) {
-                                ProduceItem(colony, item);
+                                foreach(ItemType consumed in b.itemsToConsumeDict.Keys) {
+                                    if(b.itemsToConsumeDict[consumed] == 0) {
+                                        continue;
+                                    }
+                                    else {
+                                        break;
+                                    }
+                                    
+                                }
+                                ProduceItem(colony, b, item);
                             }
                         }
 
@@ -83,18 +92,21 @@ public class ColonyController : MonoBehaviour {
 
     }
 
-    public void ConsumeItem(Colony colony, ItemType item) {
+    public void ConsumeItem(Colony colony, Building building, ItemType item) {
 
         if(colony.itemInventoryDict[item] > 0) {
             colony.itemInventoryDict[item] -= 1;
+            building.itemsToConsumeDict[item] -= 1;
             UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
+            
         }
 
     }
 
-    public void ProduceItem(Colony colony, ItemType item) {
+    public void ProduceItem(Colony colony, Building building, ItemType item) {
 
         colony.itemInventoryDict[item] += 1;
+        BuildingController.instance.CopyItemAmountDict(building.itemAmountDict, building.itemsToConsumeDict);
         UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
 
     }

@@ -46,12 +46,24 @@ public class BuildingController : MonoBehaviour {
         proto.itemAmountDict.Add(recipe.producedItem, recipe.producedItemAmount);
         foreach (ItemType item in recipe.consumedItems) {
             proto.itemAmountDict.Add(item, - recipe.consumedItemsAmount[recipe.consumedItems.IndexOf(item)]);
+            proto.itemsToConsumeDict.Add(item, recipe.consumedItemsAmount[recipe.consumedItems.IndexOf(item)]);
         }
         foreach (ItemType item in recipe.byproductItems) {
             proto.itemAmountDict.Add(item, recipe.byproductItemsAmount[recipe.byproductItems.IndexOf(item)]);
         }
 
         recipe.itemAmountDict = proto.itemAmountDict;
+
+    }
+
+    public void CopyItemAmountDict(Dictionary<ItemType,int> itemAmountDict, Dictionary<ItemType, int> itemsToConsumeDict ) {
+
+        foreach(ItemType item in itemAmountDict.Keys) {
+            if(itemAmountDict[item] < 0) {
+                itemsToConsumeDict[item] = - itemAmountDict[item];
+            }
+            
+        }
 
     }
 

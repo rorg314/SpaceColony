@@ -18,12 +18,15 @@ public class Building {
 
     // Dict of item-> item amount per recipe
     public Dictionary<ItemType, int> itemAmountDict;
+    
     // Dict of item -> items per second (consumed(-)/produced(+)
     public Dictionary<ItemType, float> itemsPerSecondDict;
     // Dict of item -> seconds per item (consumed(-)/produced(+)
     public Dictionary<ItemType, float> secondsPerItemDict;
     // Dict of item -> ticks per item (consumed(-)/produced(+)
     public Dictionary<ItemType, float> ticksPerItemDict;
+    // This dict counts down as items are consumed - item only produced if all left to consume are zero
+    public Dictionary<ItemType, int> itemsToConsumeDict;
 
     // How many ticks the recipe takes to complete
     public int recipeTicks;
@@ -99,6 +102,7 @@ public class Building {
         this.itemsPerSecondDict = new Dictionary<ItemType, float>();
         this.secondsPerItemDict = new Dictionary<ItemType, float>();
         this.itemAmountDict = new Dictionary<ItemType, int>();
+        this.itemsToConsumeDict = new Dictionary<ItemType, int>();
         //CalculateItemsPerSecondDict();
         // Doing this when create all prototypes
         //BuildingController.instance.CalculateItemsPerSecond(buildingSO.recipe, this);
@@ -120,6 +124,7 @@ public class Building {
         this.itemsPerSecondDict = other.itemsPerSecondDict;
         this.itemAmountDict = other.itemAmountDict;
         this.secondsPerItemDict = other.secondsPerItemDict;
+        this.itemsToConsumeDict = other.itemsToConsumeDict;
     }
 
 
