@@ -1,25 +1,20 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityEngine.UI;
 
 public class BuildingController : MonoBehaviour {
-
-
     public static BuildingController instance;
 
     public event Action<BuildingType> onBuildingAdded;
-    public event Action<BuildingType> onBuildingRemoved;
 
+    public event Action<BuildingType> onBuildingRemoved;
 
     public Dictionary<BuildingType, Building> buildingPrototypesDict;
 
     public Dictionary<BuildingType, List<Building>> buildingTypeInstanceListDict;
 
-
     private void Start() {
-        if(instance == null) {
+        if (instance == null) {
             instance = this;
         }
         else {
@@ -38,14 +33,13 @@ public class BuildingController : MonoBehaviour {
         onBuildingRemoved += RemoveBuildingFromColony;
     }
 
-
     // Add item amounts to building dict
     public void SetItemAmountDict(Building proto) {
         RecipeSO recipe = proto.buildingSO.recipe;
 
         proto.itemAmountDict.Add(recipe.producedItem, recipe.producedItemAmount);
         foreach (ItemType item in recipe.consumedItems) {
-            proto.itemAmountDict.Add(item, - recipe.consumedItemsAmount[recipe.consumedItems.IndexOf(item)]);
+            proto.itemAmountDict.Add(item, -recipe.consumedItemsAmount[recipe.consumedItems.IndexOf(item)]);
             proto.itemsToConsumeDict.Add(item, recipe.consumedItemsAmount[recipe.consumedItems.IndexOf(item)]);
         }
         foreach (ItemType item in recipe.byproductItems) {
@@ -53,29 +47,23 @@ public class BuildingController : MonoBehaviour {
         }
 
         recipe.itemAmountDict = proto.itemAmountDict;
-
     }
 
-    public void CopyItemAmountDict(Dictionary<ItemType,int> itemAmountDict, Dictionary<ItemType, int> itemsToConsumeDict ) {
-
-        foreach(ItemType item in itemAmountDict.Keys) {
-            if(itemAmountDict[item] < 0) {
-                itemsToConsumeDict[item] = - itemAmountDict[item];
+    public void CopyItemAmountDict(Dictionary<ItemType, int> itemAmountDict, Dictionary<ItemType, int> itemsToConsumeDict) {
+        foreach (ItemType item in itemAmountDict.Keys) {
+            if (itemAmountDict[item] < 0) {
+                itemsToConsumeDict[item] = -itemAmountDict[item];
             }
-            
         }
-
     }
 
     // Calculate items per second produced by this building
     public void CalculateItemsPerSecond(RecipeSO recipe, Building building) {
-
         // Recipe time in seconds (with speed modifier)
         int recipeTime = recipe.recipeTime * building.craftingSpeed;
 
         foreach (ItemType item in building.itemAmountDict.Keys) {
-
-            float ips =  (float)building.itemAmountDict[item] / (float)recipeTime;
+            float ips = (float)building.itemAmountDict[item] / (float)recipeTime;
             float spi = (float)recipeTime / (float)building.itemAmountDict[item];
             if (building.itemsPerSecondDict.ContainsKey(item) == false) {
                 building.itemsPerSecondDict.Add(item, ips);
@@ -90,10 +78,8 @@ public class BuildingController : MonoBehaviour {
         SetTicksPerRecipe(building);
     }
 
-
     // Convert items per second into ticks per item - calculated each time speed changes
     public void SetTicksPerRecipe(Building building) {
-
         // Recipe time in seconds (with building speed modifier)
         int baseRecipeTime = building.buildingSO.recipe.recipeTime * building.craftingSpeed;
 
@@ -105,65 +91,53 @@ public class BuildingController : MonoBehaviour {
         SetTicksPerItem(building);
     }
 
-
     public void SetTicksPerItem(Building building) {
-        foreach(ItemType item in building.itemsPerSecondDict.Keys) {
-            float speedInt = (float)MasterController.instance.getGameSpeedInt(); 
+        foreach (ItemType item in building.itemsPerSecondDict.Keys) {
+            float speedInt = (float)MasterController.instance.getGameSpeedInt();
 
             //Ticks in interval (adjusted to game speed)
-            if (building.ticksPerItemDict.ContainsKey(item) == false){
-                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]/speedInt));
+            if (building.ticksPerItemDict.ContainsKey(item) == false) {
+                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item] / speedInt));
             }
             else {
-                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]/speedInt);
+                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item] / speedInt);
             }
-
         }
     }
 
     public void RecalculateAllBuildingTickSpeeds() {
-
         foreach (BuildingType type in Enum.GetValues(typeof(ItemType))) {
             if (buildingTypeInstanceListDict.ContainsKey(type)) {
                 foreach (Building b in buildingTypeInstanceListDict[type]) {
                     SetTicksPerRecipe(b);
                 }
             }
-
         }
-
     }
 
     public void CreateAllBuildingPrototypes() {
-
         BuildingSO[] buildingSOs = Resources.LoadAll<BuildingSO>("ScriptableObjects/Buildings");
 
-        foreach(BuildingSO bSO in buildingSOs) {
-
+        foreach (BuildingSO bSO in buildingSOs) {
             Building proto = new Building(bSO);
             buildingPrototypesDict.Add(bSO.buildingType, proto);
             buildingTypeInstanceListDict.Add(bSO.buildingType, new List<Building>());
-            
+
             SetItemAmountDict(proto);
             CalculateItemsPerSecond(proto.buildingSO.recipe, proto);
         }
-
     }
-
-
-
-
 
     public void invokeBuildingAdded(BuildingType type) {
         onBuildingAdded?.Invoke(type);
     }
+
     public void invokeBuildingRemoved(BuildingType type) {
         onBuildingRemoved?.Invoke(type);
     }
 
     // On building added event
     public void AddBuildingToColony(BuildingType buildingType) {
-
         Building proto = buildingPrototypesDict[buildingType];
 
         Building instance = new Building(proto);
@@ -177,11 +151,9 @@ public class BuildingController : MonoBehaviour {
         CalculateItemsPerSecond(instance.buildingSO.recipe, instance);
 
         Debug.Log("Building added");
-
     }
 
     public void RemoveBuildingFromColony(BuildingType type) {
-
         int amount = buildingTypeInstanceListDict[type].Count - 1;
 
         if (amount < 0) {
@@ -196,9 +168,4 @@ public class BuildingController : MonoBehaviour {
 
         Debug.Log("Building removed");
     }
-
-    
-    
-    
-
 }

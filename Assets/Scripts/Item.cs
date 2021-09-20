@@ -1,63 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { 
+public enum ItemType {
+
     // Test item
     Coffee, Book, GreenCircuit, GreenScience,
-    
+
     //// Research items
     //BasicResearch, AdvResearch, QuantumResearch,
-    
+
     //// Primitive resources
     //Oxygen, Water, Hydrogen, CO2, Nitrogen,
-    
+
     //// Foods
     //BasicFood, GourmetFood, Algae, FruitVeg, Meat, SynthMeat,
-     
-    //// Basic resources 
-    //Ice, Rock, Coal, CrudeOil, MetalOre, 
-    
+
+    //// Basic resources
+    //Ice, Rock, Coal, CrudeOil, MetalOre,
+
     //// Adv resources
     //RareMetalOre, UraniumOre, SiliconOre, Tritium,
-    
+
     //// Refined items
-    //Sand, Metals, RareMetals, Petroleum, Aromatics, EnrichedUranium, Silicon,  
+    //Sand, Metals, RareMetals, Petroleum, Aromatics, EnrichedUranium, Silicon,
 
     //// Fabricated items
-    //Concrete, BasicCircuit, MachineParts, Polymers, BasicMeds, AdvMeds, 
+    //Concrete, BasicCircuit, MachineParts, Polymers, BasicMeds, AdvMeds,
 
     //// Adv Fabricated
     //OpticalFibres, Graphene, Nanomaterial, AdvCircuit, Processor,
 
     //// Quantum Items
-    //Superconductors, QuantumProcessor, WeightlessMaterial, QuarkGluonPlasma, Antihydrogen, 
-
+    //Superconductors, QuantumProcessor, WeightlessMaterial, QuarkGluonPlasma, Antihydrogen,
 }
-
 
 public class Item {
 
     // The type of item
-    public ItemType itemType {get; protected set;}
+    public ItemType itemType { get; protected set; }
 
-    
     // Is this item currently researched (unlocked)?
     public bool researched;
 
     // Sprite for this item
     public Sprite itemSprite;
 
-    
-
     public Item(ItemType type) {
-
         this.itemType = type;
         this.researched = false;
 
         //this.itemSprite = Resources.Load<Sprite>("Sprites/Items/" + type.ToString() + ".png");
     }
-
-    
-
 }

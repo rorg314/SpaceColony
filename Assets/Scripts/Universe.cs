@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 // Contains data for entire universe spanning multuple colonies
 // Research queue shared accross colonies
@@ -13,9 +11,7 @@ public class Universe {
     // List of all planets in the universe
     public List<Planet> planets;
 
-
     public Universe() {
-
         this.colonies = new List<Colony>();
         this.planets = new List<Planet>();
 
@@ -24,6 +20,4 @@ public class Universe {
         Colony testColony = new Colony(testPlanet);
         ColonyController.instance.activeColony = testColony;
     }
-
-
 }

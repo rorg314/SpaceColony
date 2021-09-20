@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,11 +16,7 @@ public class Planet {
     public Colony colony;
 
     public Planet(Universe universe) {
-
         this.universe = universe;
         universe.planets.Add(this);
-
     }
-
-
 }

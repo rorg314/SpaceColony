@@ -1,13 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-
-
 
 public class Building {
-    
-    // Colony this building is in 
+
+    // Colony this building is in
     public Colony colony { get; protected set; }
 
     public BuildingType buildingType;
@@ -18,13 +13,16 @@ public class Building {
 
     // Dict of item-> item amount per recipe
     public Dictionary<ItemType, int> itemAmountDict;
-    
+
     // Dict of item -> items per second (consumed(-)/produced(+)
     public Dictionary<ItemType, float> itemsPerSecondDict;
+
     // Dict of item -> seconds per item (consumed(-)/produced(+)
     public Dictionary<ItemType, float> secondsPerItemDict;
+
     // Dict of item -> ticks per item (consumed(-)/produced(+)
     public Dictionary<ItemType, float> ticksPerItemDict;
+
     // This dict counts down as items are consumed - item only produced if all left to consume are zero
     public Dictionary<ItemType, int> itemsToConsumeDict;
 
@@ -37,16 +35,10 @@ public class Building {
     // Power consumption(-)/production(+) of this building
     public int wattage;
 
-
-
     // Base consumption speed (modified by upgrades) - modifies crafting speed (total time = recipeTime/craftingSpeed)
     public int craftingSpeed = 1;
-        
-    
-    
-    ///////// Upgrade info /////////
 
-    
+    ///////// Upgrade info /////////
 
     ///////// Colonist info /////////
 
@@ -56,17 +48,12 @@ public class Building {
     // Colonists working in this building
     public List<Colonist> colonists;
 
-
     ///////// Building status /////////
 
     // Is building currently active? (workload requirement satisfied)
     public bool isActive;
 
-    
     //public void CalculateItemsPerSecondDict() {
-
-        
-
     //    itemsPerSecondDict.Add(buildingSO.recipe.producedItem, buildingSO.recipe.recipeTime / buildingSO.recipe.producedItemAmount);
 
     //    foreach (ItemType item in buildingSO.recipe.consumedItems) {
@@ -81,10 +68,8 @@ public class Building {
 
     //}
 
-
     // Prototype constructor
     public Building(BuildingSO buildingSO) {
-
         this.buildingSO = buildingSO;
 
         this.buildingType = buildingSO.buildingType;
@@ -96,7 +81,6 @@ public class Building {
         this.recipeTicks = 0;
         this.isActive = false;
 
-
         this.ticksPerItemDict = new Dictionary<ItemType, float>();
         this.itemsPerSecondDict = new Dictionary<ItemType, float>();
         this.secondsPerItemDict = new Dictionary<ItemType, float>();
@@ -107,9 +91,8 @@ public class Building {
         //BuildingController.instance.CalculateItemsPerSecond(buildingSO.recipe, this);
     }
 
-    // Instance copy constructor 
+    // Instance copy constructor
     public Building(Building other) {
-
         this.buildingSO = other.buildingSO;
 
         this.buildingType = other.buildingType;
@@ -117,7 +100,6 @@ public class Building {
         this.wattage = other.wattage;
         this.workload = other.workload;
         this.isActive = true;
-
 
         this.ticks = other.ticks;
         this.recipeTicks = other.recipeTicks;
@@ -127,7 +109,4 @@ public class Building {
         this.secondsPerItemDict = other.secondsPerItemDict;
         this.itemsToConsumeDict = other.itemsToConsumeDict;
     }
-
-
-    
 }

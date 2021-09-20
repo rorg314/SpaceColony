@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UniverseController : MonoBehaviour {
-
-
     public static UniverseController instance;
 
     public Universe universe;
 
-    
-
     public void Start() {
-        
         if (instance == null) {
             instance = this;
         }
@@ -26,19 +19,12 @@ public class UniverseController : MonoBehaviour {
 
         MasterController.instance.onTick += UpdateAllPlanets;
         MasterController.instance.onTick += ColonyController.instance.UpdateActiveColony;
-
     }
 
     public void UpdateAllPlanets() {
-
-        foreach(Planet p in universe.planets) {
-
+        foreach (Planet p in universe.planets) {
             //Update planet colony
             //ColonyController.instance.UpdateColony(p.colony);
-
         }
-
     }
-
-
 }
