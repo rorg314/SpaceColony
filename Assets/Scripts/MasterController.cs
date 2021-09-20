@@ -29,6 +29,8 @@ public class MasterController : MonoBehaviour {
     // On speed changed action
     public event Action onSpeedChanged;
 
+    public bool debugTick = true;
+
     public int getGameSpeedInt() {
         switch (gameSpeed) {
             case GameSpeed.x1:
@@ -50,13 +52,13 @@ public class MasterController : MonoBehaviour {
     public int getTPS() {
         switch (gameSpeed) {
             case GameSpeed.x1:
-                return 4;
-            case GameSpeed.x2:
                 return 8;
-            case GameSpeed.x4:
+            case GameSpeed.x2:
                 return 16;
-            case GameSpeed.x8:
+            case GameSpeed.x4:
                 return 32;
+            case GameSpeed.x8:
+                return 64;
             default:
                 break;
         }
@@ -82,13 +84,13 @@ public class MasterController : MonoBehaviour {
     public float getSPT() {
         switch (gameSpeed) {
             case GameSpeed.x1:
-                return 1/4f;
-            case GameSpeed.x2:
                 return 1/8f;
-            case GameSpeed.x4:
+            case GameSpeed.x2:
                 return 1/16f;
-            case GameSpeed.x8:
+            case GameSpeed.x4:
                 return 1/32f;
+            case GameSpeed.x8:
+                return 1/64f;
             default:
                 break;
         }
@@ -117,6 +119,8 @@ public class MasterController : MonoBehaviour {
         SPT = getSPT();
         time = 0f;
         lastTick = 0f;
+
+        debugTick = false;
         
         // Initial tick
         
@@ -137,9 +141,13 @@ public class MasterController : MonoBehaviour {
         // Increase epoch time in seconds
         time += Time.deltaTime;
 
-        if(time - lastTick >= SPT) {
-            Tick();
+        if(debugTick == false) {
+            if (time - lastTick >= SPT) {
+                Tick();
+                Debug.Log("Tick");
+            }
         }
+        
 
         //if(frameCounter >= framesPerTick) {
         //    Tick();
@@ -178,11 +186,11 @@ public class MasterController : MonoBehaviour {
         onSpeedChanged?.Invoke();
     }
 
-    
 
-    //public void debugTick() {
 
-    //    Debug.Log("Tick -- Game Speed = " + gameSpeed);
+    public void DebugTick() {
 
-    //}
+        //Debug.Log("Tick -- Game Speed = " + gameSpeed);
+        Tick();
+    }
 }

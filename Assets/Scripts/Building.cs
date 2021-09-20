@@ -62,10 +62,7 @@ public class Building {
     // Is building currently active? (workload requirement satisfied)
     public bool isActive;
 
-    // Is the building currently producing resources?
-    public bool isProducing;
-
-
+    
     //public void CalculateItemsPerSecondDict() {
 
         
@@ -97,6 +94,8 @@ public class Building {
 
         this.ticks = 0;
         this.recipeTicks = 0;
+        this.isActive = false;
+
 
         this.ticksPerItemDict = new Dictionary<ItemType, float>();
         this.itemsPerSecondDict = new Dictionary<ItemType, float>();
@@ -117,6 +116,8 @@ public class Building {
 
         this.wattage = other.wattage;
         this.workload = other.workload;
+        this.isActive = true;
+
 
         this.ticks = other.ticks;
         this.recipeTicks = other.recipeTicks;

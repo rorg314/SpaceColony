@@ -55,17 +55,23 @@ public class ColonyController : MonoBehaviour {
             List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
             if(allBuildings.Count > 0) {
                 foreach (Building b in allBuildings) {
-                    
-                    b.ticks++;
+                    if (b.isActive) {
 
-                    foreach (ItemType item in b.ticksPerItemDict.Keys) {
-                        if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {
-                            ConsumeItem(colony, b, item);
+                        b.ticks++;
+                        
+                        // Check for items left needing to be consumed
+                        foreach (ItemType item in b.ticksPerItemDict.Keys) {
+                            if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {
+                                ConsumeItem(colony, b, item);
+                            }
                         }
-                        else if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] > 0) {
+
+                        // Check if reached end of recipe time
+                        ItemType producedItem = b.buildingSO.recipe.producedItem;
+                        if (b.ticks % b.ticksPerItemDict[producedItem] == 0 && b.itemAmountDict[producedItem] > 0) {
                             bool complete = false;
-                            foreach(ItemType consumed in b.itemsToConsumeDict.Keys) {
-                                if(b.itemsToConsumeDict[consumed] == 0) {
+                            foreach (ItemType consumed in b.itemsToConsumeDict.Keys) {
+                                if (b.itemsToConsumeDict[consumed] == 0) {
                                     complete = true;
                                     continue;
                                 }
@@ -75,13 +81,13 @@ public class ColonyController : MonoBehaviour {
                                 }
                             }
                             if (complete) {
-                                ProduceItem(colony, b, item);
+                                ProduceItem(colony, b, producedItem);
                                 b.ticks = 0;
                             }
-                            
-                        }
-                    }
 
+                        }
+                        
+                    }
                         
                 }
             }
@@ -94,11 +100,11 @@ public class ColonyController : MonoBehaviour {
 
     public void ConsumeItem(Colony colony, Building building, ItemType item) {
 
-        if(colony.itemInventoryDict[item] > 0) {
+        if(colony.itemInventoryDict[item] > 0 && building.itemsToConsumeDict[item] > 0) {
             colony.itemInventoryDict[item] -= 1;
-            if(building.itemsToConsumeDict[item] > 0) {
-                building.itemsToConsumeDict[item] -= 1;
-            }
+            
+            building.itemsToConsumeDict[item] -= 1;
+            
             UiController.instance.UpdateItemCard(item, colony.itemInventoryDict[item]);
         }
 

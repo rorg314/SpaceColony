@@ -34,7 +34,7 @@ public class BuildingController : MonoBehaviour {
 
         CreateAllBuildingPrototypes();
 
-        onBuildingAdded += addBuildingToColony;
+        onBuildingAdded += AddBuildingToColony;
         onBuildingRemoved += RemoveBuildingFromColony;
     }
 
@@ -105,6 +105,7 @@ public class BuildingController : MonoBehaviour {
         SetTicksPerItem(building);
     }
 
+
     public void SetTicksPerItem(Building building) {
         foreach(ItemType item in building.itemsPerSecondDict.Keys) {
             float speedInt = (float)MasterController.instance.getGameSpeedInt(); 
@@ -153,20 +154,6 @@ public class BuildingController : MonoBehaviour {
 
 
 
-    public Building AddBuildingToColony(BuildingType buildingType) {
-
-
-        Building proto = buildingPrototypesDict[buildingType];
-
-        Building instance = new Building(proto);
-
-        buildingTypeInstanceListDict[buildingType].Add(instance);
-
-
-
-        return instance;
-    }
-
     public void invokeBuildingAdded(BuildingType type) {
         onBuildingAdded?.Invoke(type);
     }
@@ -175,7 +162,7 @@ public class BuildingController : MonoBehaviour {
     }
 
     // On building added event
-    public void addBuildingToColony(BuildingType buildingType) {
+    public void AddBuildingToColony(BuildingType buildingType) {
 
         Building proto = buildingPrototypesDict[buildingType];
 
