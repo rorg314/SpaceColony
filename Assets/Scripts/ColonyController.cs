@@ -51,39 +51,36 @@ public class ColonyController : MonoBehaviour {
 
     public void UpdateAllBuildingRecipeTicks(Colony colony) {
 
-        foreach(BuildingType type in Enum.GetValues(typeof(ItemType))) {
-            if (BuildingController.instance.buildingTypeInstanceListDict.ContainsKey(type)){
-                List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
-                if(allBuildings.Count > 0) {
-                    foreach (Building b in allBuildings) {
-                        //if (b.ticks < b.recipeTicks) {
-                        //    b.ticks++;
-                        //}
+        foreach(BuildingType type in BuildingController.instance.buildingTypeInstanceListDict.Keys) {
+            List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
+            if(allBuildings.Count > 0) {
+                foreach (Building b in allBuildings) {
+                    //if (b.ticks < b.recipeTicks) {
+                    //    b.ticks++;
+                    //}
 
-                        b.ticks++;
+                    b.ticks++;
 
-                        foreach (ItemType item in b.ticksPerItemDict.Keys) {
-                            if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {
-                                ConsumeItem(colony, b, item);
-                            }
-                            else if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] > 0) {
-                                foreach(ItemType consumed in b.itemsToConsumeDict.Keys) {
-                                    if(b.itemsToConsumeDict[consumed] == 0) {
-                                        continue;
-                                    }
-                                    else {
-                                        break;
-                                    }
-                                    
-                                }
-                                ProduceItem(colony, b, item);
-                            }
+                    foreach (ItemType item in b.ticksPerItemDict.Keys) {
+                        if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] < 0) {
+                            ConsumeItem(colony, b, item);
                         }
+                        else if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] > 0) {
+                            foreach(ItemType consumed in b.itemsToConsumeDict.Keys) {
+                                if(b.itemsToConsumeDict[consumed] == 0) {
+                                    continue;
+                                }
+                                else {
+                                    break;
+                                }
+                                    
+                            }
+                            ProduceItem(colony, b, item);
+                        }
+                    }
 
                         
-                    }
                 }
-                
             }
 
         }

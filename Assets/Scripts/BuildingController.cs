@@ -107,12 +107,14 @@ public class BuildingController : MonoBehaviour {
 
     public void SetTicksPerItem(Building building) {
         foreach(ItemType item in building.itemsPerSecondDict.Keys) {
+            float speedInt = (float)MasterController.instance.getGameSpeedInt(); 
+
             //Ticks in interval (adjusted to game speed)
             if (building.ticksPerItemDict.ContainsKey(item) == false){
-                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]));
+                building.ticksPerItemDict.Add(item, MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]/speedInt));
             }
             else {
-                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]);
+                building.ticksPerItemDict[item] = MasterController.instance.GetTicksInRealtimeInterval(building.secondsPerItemDict[item]/speedInt);
             }
 
         }
