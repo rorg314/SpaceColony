@@ -85,8 +85,8 @@ public class UiController : MonoBehaviour {
             foreach (ItemType item in activeColony.itemInventoryDict.Keys) {
                 int amount = activeColony.itemInventoryDict[item];
                 if (amount > 0) {
-                    GameObject itemCard = AddItemCard(item);
-                    UpdateItemCard(itemCard, amount);
+                    AddItemCard(item);
+                    UpdateItemCard(item, amount);
                 }
 
             }
@@ -124,7 +124,14 @@ public class UiController : MonoBehaviour {
         return itemCard;
     }
 
-    public void UpdateItemCard(GameObject itemCard, int amount) {
+    public void UpdateItemCard(ItemType item, int amount) {
+        GameObject itemCard;
+        if (itemTypeItemCardDict.ContainsKey(item) == false){
+            itemCard = AddItemCard(item);
+        }
+        else {
+            itemCard = itemTypeItemCardDict[item];
+        }
 
         Text amountText = itemCard.GetComponentInChildren<Text>();
 

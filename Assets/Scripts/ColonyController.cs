@@ -55,10 +55,7 @@ public class ColonyController : MonoBehaviour {
             List<Building> allBuildings = BuildingController.instance.buildingTypeInstanceListDict[type];
             if(allBuildings.Count > 0) {
                 foreach (Building b in allBuildings) {
-                    //if (b.ticks < b.recipeTicks) {
-                    //    b.ticks++;
-                    //}
-
+                    
                     b.ticks++;
 
                     foreach (ItemType item in b.ticksPerItemDict.Keys) {
@@ -66,16 +63,22 @@ public class ColonyController : MonoBehaviour {
                             ConsumeItem(colony, b, item);
                         }
                         else if (b.ticks % b.ticksPerItemDict[item] == 0 && b.itemAmountDict[item] > 0) {
+                            bool complete = false;
                             foreach(ItemType consumed in b.itemsToConsumeDict.Keys) {
                                 if(b.itemsToConsumeDict[consumed] == 0) {
+                                    complete = true;
                                     continue;
                                 }
                                 else {
+                                    complete = false;
                                     break;
                                 }
-                                    
                             }
-                            ProduceItem(colony, b, item);
+                            if (complete) {
+                                ProduceItem(colony, b, item);
+                                b.ticks = 0;
+                            }
+                            
                         }
                     }
 
@@ -93,9 +96,10 @@ public class ColonyController : MonoBehaviour {
 
         if(colony.itemInventoryDict[item] > 0) {
             colony.itemInventoryDict[item] -= 1;
-            building.itemsToConsumeDict[item] -= 1;
-            UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
-            
+            if(building.itemsToConsumeDict[item] > 0) {
+                building.itemsToConsumeDict[item] -= 1;
+            }
+            UiController.instance.UpdateItemCard(item, colony.itemInventoryDict[item]);
         }
 
     }
@@ -104,7 +108,7 @@ public class ColonyController : MonoBehaviour {
 
         colony.itemInventoryDict[item] += 1;
         BuildingController.instance.CopyItemAmountDict(building.itemAmountDict, building.itemsToConsumeDict);
-        UiController.instance.UpdateItemCard(UiController.instance.itemTypeItemCardDict[item], colony.itemInventoryDict[item]);
+        UiController.instance.UpdateItemCard(item, colony.itemInventoryDict[item]);
 
     }
 }
