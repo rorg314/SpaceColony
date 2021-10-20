@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public enum BuildingType {
-    Dome, Factory
+    Dome, Factory, Nuclear, Sattelite
 }
 
 [CreateAssetMenu(fileName = "Building Data", menuName = "Data/Building Data")]

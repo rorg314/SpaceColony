@@ -3,7 +3,7 @@ using UnityEngine;
 public enum ItemType {
 
     // Test item
-    Coffee, Book, GreenCircuit, GreenScience,
+    Coffee, Book, GreenCircuit, GreenScience, NuclearWaste, Data
 
     //// Research items
     //BasicResearch, AdvResearch, QuantumResearch,

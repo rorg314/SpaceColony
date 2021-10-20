@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8075c13216c0e5a41af59e3399fa0598, type: 3}
-  m_Name: FactoryRecipe
+  m_Name: NuclearRecipe
   m_EditorClassIdentifier: 
-  consumedItems: 01000000
-  consumedItemsAmount: 01000000
-  producedItem: 2
-  producedItemAmount: 5
+  consumedItems: 05000000
+  consumedItemsAmount: 05000000
+  producedItem: 4
+  producedItemAmount: 1
   byproductItems: 
   byproductItemsAmount: 
-  recipeTime: 5
+  recipeTime: 20
